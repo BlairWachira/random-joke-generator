@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Joke Generator</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f8f8;
+        text-align: center;
+        padding: 20px;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      #joke {
+        max-width: 90%;
+        width: 500px;
+        min-height: 120px;
+        margin: 0 auto;
+        padding: 15px;
+        border: 3px solid #1b2a41;
+        border-radius: 20px;
+        background-color: white;
+        font-size: 1rem;
+        line-height: 1.5;
+        text-align: left;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        word-wrap: break-word;
+      }
+
+      button {
+        margin-top: 25px;
+        padding: 12px 30px;
+        font-size: 1rem;
+        color: white;
+        background-color: #60b246;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #4b9638;
+      }
+
+      @media (max-width: 500px) {
+        h1 {
+          font-size: 1.3rem;
+        }
+
+        #joke {
+          font-size: 0.95rem;
+          padding: 10px;
+        }
+
+        button {
+          width: 80%;
+          font-size: 0.95rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CLICK TO GENERATE A JOKE</h1>
+    <div id="joke">Joke content will appear here...</div>
+    <button onclick="getJoke()">GET JOKE</button>
+
+    <script>
+      async function getJoke() {
+        const response = await fetch(
+          "https://v2.jokeapi.dev/joke/Any?safe-mode"
+        );
+        const data = await response.json();
+
+        const jokeText =
+          data.type === "single"
+            ? data.joke
+            : `${data.setup}<br><br>${data.delivery}`;
+
+        document.getElementById("joke").innerHTML = jokeText;
+      }
+    </script>
+  </body>
+</html>
